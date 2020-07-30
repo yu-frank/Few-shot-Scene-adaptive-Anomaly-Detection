@@ -74,7 +74,7 @@ def meta_update_model(model, optimizer, loss, gradients):
         h.remove()
 
 """MAIN TRAINING SCRIPT"""
-def main(k_shots, num_tasks, adam_betas, gen_lr, dis_lr, total_epochs, model_folder_path):
+def main(k_shots, num_tasks, adam_betas, gen_lr, dis_lr, total_epochs, model_folder_path, frame_path):
     torch.manual_seed(1)
     # Initialize generator and discriminator
     batch_size = 1
@@ -102,7 +102,6 @@ def main(k_shots, num_tasks, adam_betas, gen_lr, dis_lr, total_epochs, model_fol
     previous_generator = generator_path
     previous_discriminator = discriminator_path
 
-    frame_path = '/mnt/creeper/grad/luy2/Meta-Learning/data/shanghaitech-5tasks/training/frames/' 
 
     # Set Up Training Loop
     for epoch in range(total_epochs):
@@ -253,7 +252,7 @@ def main(k_shots, num_tasks, adam_betas, gen_lr, dis_lr, total_epochs, model_fol
 
 
 if __name__ == "__main__":
-    if (len(sys.argv) == 8):
+    if (len(sys.argv) == 9):
         """SYS ARG ORDER: 
         K_shots, num_tasks, adam_betas, generator lr, discriminator lr, total epochs, save model path
         """
@@ -264,6 +263,7 @@ if __name__ == "__main__":
         dis_lr = float(sys.argv[5])
         total_epochs = int(sys.argv[6])
         model_folder_path = sys.argv[7]
+        frame_path = sys.argv[8]
     else:
         k_shots = 1 
         num_tasks = 6
@@ -272,4 +272,5 @@ if __name__ == "__main__":
         dis_lr = 1e-5
         total_epochs = 2000
         model_folder_path = "model"
-    main(k_shots, num_tasks, adam_betas, gen_lr, dis_lr, total_epochs, model_folder_path)
+        frame_path = '/mnt/creeper/grad/luy2/Meta-Learning/data/shanghaitech-5tasks/training/frames/' 
+    main(k_shots, num_tasks, adam_betas, gen_lr, dis_lr, total_epochs, model_folder_path, frame_path)
